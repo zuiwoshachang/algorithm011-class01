@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        const int Cnt = nums.size();
+        if (Cnt < 2)
+            return Cnt;
+      
+        int i = 0, j = 1;
+        for (;j < Cnt; ++j) {
+            if (nums[i] != nums[j]) {
+                if (i + 1 < j)
+                    nums[i+1] = nums[j];
+                ++i;
+            }
+        }        
+        return i + 1;
+    }
+};
