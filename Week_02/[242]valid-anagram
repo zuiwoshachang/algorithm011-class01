@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.size() != t.size()) return false; 
+        int arr[26] = {};
+        for (auto& ch : s) {
+            ++arr[ch - 'a'];
+        }
+
+        for (auto& ch : t) {            
+            if (--arr[ch - 'a'] < 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};

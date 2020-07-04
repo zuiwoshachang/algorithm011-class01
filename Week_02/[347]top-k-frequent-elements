@@ -1,0 +1,45 @@
+class Solution {
+public:
+    struct Data {
+        int val;
+        int cnt;        
+        Data(int v, int c):val(v), cnt(c){}
+
+        bool operator>(const Data& r) const {
+            return cnt > r.cnt;
+        }
+        bool operator<(const Data& r) const {
+            return cnt > r.cnt;
+        }
+    };
+
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        std::unordered_map<int, int> itemCntMap;
+        for (auto item : nums) {
+            ++itemCntMap[item];
+        }
+
+        std::priority_queue<Data, vector<Data>, std::greater<Data>> Q;
+        int i = 0;
+        for (auto& item : itemCntMap) {
+            if (i < k) {
+                Q.push(Data(item.first, item.second));
+            }
+            else {
+                if (itemCntMap[Q.top().cnt] < item.second) {
+                    Q.pop();   
+                    Q.push(Data(item.first, item.second));                             
+                }
+            }
+            ++i;
+        }
+
+        vector<int> res;
+        while (!Q.empty()) {
+            res.push_back(Q.top().val);
+            Q.pop();
+        }
+
+        return res;
+    }
+};
