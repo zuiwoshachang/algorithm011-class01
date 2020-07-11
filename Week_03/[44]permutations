@@ -1,0 +1,30 @@
+class Solution {
+private:
+    vector<vector<int>> m_res;
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        if (nums.empty()) { return vector<vector<int>>{{}}; }
+
+        vector<int> path;
+        backtrack(path, nums);
+        return m_res;
+    }
+
+    void backtrack(vector<int>& path, vector<int>& nums) {
+        if (path.size() == nums.size()) {
+            m_res.push_back(path);
+            return;
+        }
+
+        for (auto& item : nums) {
+            if (std::find(path.begin(), path.end(), item) != path.end())
+                continue;
+            // pick
+            path.push_back(item);
+            backtrack(path, nums);
+
+            // revert
+            path.pop_back();
+        }
+    }
+};

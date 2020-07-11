@@ -1,0 +1,27 @@
+class Solution {
+private:
+    vector<vector<int>> m_res;
+public:
+    vector<vector<int>> combine(int n, int k) {
+        if (n < k) return vector<vector<int>>{{}};        
+        vector<int> path;
+        dfs(n, 1, k, path);
+        return m_res;
+    }
+
+    void dfs(int n, int pos, int k, vector<int>& path) {
+        if (path.size() == k) {
+            m_res.push_back(path);
+            return;
+        }
+
+        for (int i = pos; i <= n; ++i) {
+            // pick
+            path.push_back(i);
+            dfs(n, i + 1, k, path);
+
+            // revert
+            path.pop_back();
+        }
+    }
+};
