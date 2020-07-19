@@ -1,0 +1,33 @@
+class Solution {
+private:
+    int m_row = 0;
+    int m_col = 0;
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        if (grid.empty()) return 0;
+        int cnt = 0;
+        m_row = grid.size();
+        m_col = grid[0].size();
+        for (int i = 0; i < m_row; ++i) {
+            for (int j = 0; j < m_col; ++j) {
+                if ('1' == grid[i][j]) {
+                    ++cnt;
+                    DFSMask(grid, i, j);
+                }
+            }
+
+        }
+
+        return cnt;
+    }
+
+    void DFSMask(vector<vector<char>>& grid, int i, int j) {
+        if (i < 0 || j < 0 || i >= m_row || j >= m_col || '0' == grid[i][j]) return;
+        
+        grid[i][j] = '0';
+        DFSMask(grid, i, j + 1);
+        DFSMask(grid, i + 1, j);
+        DFSMask(grid, i, j - 1);
+        DFSMask(grid, i - 1, j);
+    }
+};
