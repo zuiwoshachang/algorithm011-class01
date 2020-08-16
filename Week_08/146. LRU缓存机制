@@ -1,0 +1,48 @@
+class LRUCache {
+private:
+    std::list<int> m_cache;
+    std::unordered_map<int, int> m_keys;
+    int m_capacity;
+public:
+    LRUCache(int capacity) {
+        m_capacity = capacity;
+    }
+    
+    int get(int key) {
+        if (m_keys.find(key) == m_keys.end()) {
+            return -1;
+        }
+        if (m_cache.front() != key) {
+            m_cache.remove(key);
+            m_cache.push_front(key);
+        }
+
+        return m_keys[key];
+    }
+    
+    void put(int key, int value) {
+        if (m_keys.find(key) != m_keys.end()) {
+            if (m_cache.front() != key) {
+                m_cache.remove(key);
+                m_cache.push_front(key);
+            }
+        }
+        else
+            m_cache.push_front(key);
+        
+        m_keys[key] = value;
+
+        if (m_cache.size() > m_capacity) {
+            auto k = m_cache.back();
+            m_cache.pop_back();
+            m_keys.erase(k);
+        }        
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
