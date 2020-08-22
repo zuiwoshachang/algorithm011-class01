@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        std::unordered_map<char, char> s2tmap;
+        std::unordered_map<char, char> t2smap;
+        for (int i = 0; i < s.length(); ++i) {
+            if (t2smap.find(t[i]) != t2smap.end()) {
+                if (t2smap[t[i]] != s[i]) return false;
+            }
+            if (s2tmap.find(s[i]) != s2tmap.end()) {
+                if (s2tmap[s[i]] != t[i]) return false;
+            }
+
+            s2tmap[s[i]] = t[i];
+            t2smap[t[i]] = s[i];
+        }
+        
+        return true;
+    }
+};

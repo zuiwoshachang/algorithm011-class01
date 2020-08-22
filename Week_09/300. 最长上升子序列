@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        const int cnt = nums.size();
+        if (cnt < 2)
+            return cnt;
+        vector<int> dp(cnt, 1);
+        
+        int res = 1;
+        for (int i = 1; i < cnt; ++i) {
+            int tmp = 1;
+            for (int j = 0; j < i; ++j) {
+                if (nums[j] < nums[i]) {
+                    tmp = max(tmp, dp[j] + 1);
+                }
+            }
+            dp[i] = tmp;
+            res = max(res, tmp);
+        }
+
+        return res;
+    }
+};

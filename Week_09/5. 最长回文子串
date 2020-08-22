@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        const int len = s.length();
+        if (len < 2)
+            return s;
+        string res(s.substr(0,1));
+        for (int i = 1; i < 2 * (len - 1); ++i) {
+            int p = i / 2;
+            int q = p + i % 2;
+            while (p >= 0 && q < len && s[p] == s[q]) {
+                --p;
+                ++q;
+            }
+
+            ++p;--q;
+            if (p <= q && res.length() < (q - p + 1))
+                res = s.substr(p, q - p + 1); 
+        }
+
+        return res;        
+    }
+};
